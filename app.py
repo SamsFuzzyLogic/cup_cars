@@ -13,15 +13,10 @@ def is_valid_email(email):
 
 st.set_page_config(page_title="Chicago Road Race", layout="centered")
 
-# Centered logo image using HTML
-st.markdown(
-    '''
-    <div style="text-align: center;">
-        <img src="cup_cars/images/cupcar.png" width="150">
-    </div>
-    ''',
-    unsafe_allow_html=True
-)
+# Centered image using st.image inside markdown div
+st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+st.image("images/cupcar.png", width=150)
+st.markdown("</div>", unsafe_allow_html=True)
 
 st.title("NASCAR Chicago Survey")
 
