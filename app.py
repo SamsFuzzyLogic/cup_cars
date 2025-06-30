@@ -111,5 +111,5 @@ if st.button("Submit"):
             st.warning(err)
     else:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        sheet.append_row([timestamp, entry_name, email, q1, q2, q3, q4, int(lead_lap)])
+        sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
         st.success("✅ Godspeed!")
