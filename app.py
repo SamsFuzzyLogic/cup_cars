@@ -15,7 +15,7 @@ st.set_page_config(page_title="Chicago Road Race", layout="centered")
 
 # Centered image using st.image inside markdown div
 st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-st.image("images/cupcar.png", width=150)
+st.image("images/cupcar_logo.png", width=150)
 st.markdown("</div>", unsafe_allow_html=True)
 
 st.title("NASCAR Chicago Survey")
