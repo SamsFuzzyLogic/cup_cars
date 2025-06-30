@@ -49,7 +49,7 @@ if not sheet:
     sheet = spreadsheet.add_worksheet(title=target_title, rows="100", cols="10")
 
 # Headers setup
-headers = ["Timestamp", "Entry Name", "Email", "Chevrolet Driver", "Ford Driver", "Toyota Driver", "Manufacturer", "Lead Lap Count"]
+headers = ["Timestamp", "Email", "Entry Name", "Chevrolet Driver", "Ford Driver", "Toyota Driver", "Manufacturer", "Lead Lap"]
 values = sheet.get_all_values()
 if not values or values[0] != headers:
     sheet.update("A1:H1", [headers])
