@@ -17,7 +17,7 @@ st.set_page_config(page_title="Chicago Road Race", layout="centered")
 st.markdown(
     '''
     <div style="text-align: center;">
-        <img src="images/cupcar.png" width="150">
+        <img src="cupcar.png" width="150">
     </div>
     ''',
     unsafe_allow_html=True
