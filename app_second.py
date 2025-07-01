@@ -8,6 +8,7 @@ from gspread_formatting import (
 )
 import sendgrid
 from sendgrid.helpers.mail import Mail
+from pytz import timezone, utc
 
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
@@ -130,7 +131,8 @@ if not st.session_state.get("submitted", False):
             for err in errors:
                 st.warning(err)
         else:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            eastern = timezone("US/Eastern")
+            timestamp = datetime.now(utc).astimezone(eastern).strftime("%Y-%m-%d %H:%M:%S %Z")
             sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
             send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
             st.session_state["submitted"] = True
