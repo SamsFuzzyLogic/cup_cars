@@ -12,18 +12,31 @@ from sendgrid.helpers.mail import Mail
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
-def send_confirmation_email(to_email, name):
+def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
     sg = sendgrid.SendGridAPIClient(api_key=st.secrets["sendgrid"]["api_key"])
     from_email = st.secrets["sendgrid"]["sender_email"]
     subject = "✅ NASCAR Cup Car Challenge – Confirmation Received"
+
     html_content = f"""
     <p>Hi {name},</p>
-    <p>Thanks for participating in the NASCAR Cup Car Challenge!</p>
-    <p>We received your picks and lead lap prediction. Good luck!</p>
-    <p>🏁</p>
+    <p>Thanks for participating in the NASCAR Cup Car Challenge! 🎉</p>
+
+    <p><strong>Here’s a recap of your picks:</strong></p>
+    <ul>
+        <li><strong>Best Chevrolet Driver:</strong> {q1}</li>
+        <li><strong>Best Ford Driver:</strong> {q2}</li>
+        <li><strong>Best Toyota Driver:</strong> {q3}</li>
+        <li><strong>Manufacturer to Win:</strong> {q4}</li>
+        <li><strong>Cars Finishing on Lead Lap:</strong> {lead_lap}</li>
+    </ul>
+
+    <p>🏁 Good luck, and may the best driver win!</p>
+    <p>— The Cup Car Challenge Team</p>
     """
+
     message = Mail(from_email=from_email, to_emails=to_email, subject=subject, html_content=html_content)
     sg.send(message)
+
 
 st.set_page_config(page_title="Chicago Road Race", layout="centered")
 
@@ -123,5 +136,5 @@ if submitted:
     else:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
-        send_confirmation_email(email, entry_name)
+        send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
         st.success("✅ Godspeed! A confirmation has been sent to your email.")
