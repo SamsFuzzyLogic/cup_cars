@@ -38,7 +38,7 @@ def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
 st.set_page_config(page_title="Chicago Road Race", layout="centered")
 
 st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-st.image("images/cupcar_logo.png", width=500)
+st.image("images/cupcar_logo.png", width=700,)
 st.markdown("</div>", unsafe_allow_html=True)
 
 st.title("Chicago Road Race")
