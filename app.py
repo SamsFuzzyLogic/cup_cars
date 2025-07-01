@@ -2,8 +2,8 @@ import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
-import pytz
 import re
+import pytz
 from gspread_formatting import (
     CellFormat, Color, TextFormat, format_cell_range
 )
@@ -45,7 +45,6 @@ st.title("NASCAR Chicago Survey")
 st.markdown("###")
 st.markdown("---")
 
-# Authenticate with Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 gsecrets = st.secrets["gspread"]
 creds_dict = {
@@ -64,7 +63,6 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 spreadsheet = client.open("Cup Survey")
 
-# Worksheet setup
 target_title = "Chicago 2025"
 worksheet_list = spreadsheet.worksheets()
 sheet = next((ws for ws in worksheet_list if ws.title.strip().lower() == target_title.lower()), None)
