@@ -40,7 +40,7 @@ st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
 st.image("images/cupcar_logo.png", width=500)
 st.markdown("</div>", unsafe_allow_html=True)
 
-st.title("NASCAR Chicago Survey")
+st.title("Chicago Road Race")
 st.markdown("###")
 st.markdown("---")
 
