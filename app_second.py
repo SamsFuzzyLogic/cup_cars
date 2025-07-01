@@ -15,7 +15,7 @@ def is_valid_email(email):
 def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
     sg = sendgrid.SendGridAPIClient(api_key=st.secrets["sendgrid"]["api_key"])
     from_email = st.secrets["sendgrid"]["sender_email"]
-    subject = "✅ NASCAR Cup Car Challenge – Confirmation Received"
+    subject = "✅ Cup Car Challenge – Confirmation Received"
     html_content = f"""
     <p>Hi {name},</p>
     <p>Thanks for participating in the Cup Car Challenge!</p>
