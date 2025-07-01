@@ -93,7 +93,7 @@ with st.form("cupcar_survey_form"):
     q4 = st.radio("4. Which Manufacturer Wins:", ["Chevrolet", "Ford", "Toyota"])
     st.markdown("###")
 
-    lead_lap = st.number_input("5. Number of Cars Finishing on Lead Lap", min_value=1, max_value=37, placeholder="Out of 37")
+    lead_lap = st.number_input("5. Number of Cars Finishing on Lead Lap", value=0, placeholder="Out of 37")
 
     submitted = st.form_submit_button("Submit")
 
@@ -103,8 +103,9 @@ if submitted:
         errors.append("🚫 Entry Name is required.")
     if not email.strip() or not is_valid_email(email):
         errors.append("🚫 A valid Email Address is required.")
-    if not lead_lap:
-        errors.append("🚫 You must enter how many cars finish on the lead lap.")
+    if lead_lap <= 0 or lead_lap > 37:
+        errors.append("🚫 Enter a number between 1 and 37 for cars finishing on the lead lap.")
+
 
     if errors:
         for err in errors:
