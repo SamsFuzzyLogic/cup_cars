@@ -30,7 +30,7 @@ def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
         <li><strong>Cars Finishing on Lead Lap:</strong> {lead_lap}</li>
     </ul>
 
-    <p>🏁 Good luck, and may the best driver win!</p>
+    <p>🏁 Good luck, and may the best team win!</p>
     <p>— The Cup Car Challenge Team</p>
     """
 
