@@ -6,6 +6,9 @@ import re
 from gspread_formatting import (
     CellFormat, Color, TextFormat, format_cell_range
 )
+import sendgrid
+from sendgrid.helpers.mail import Mail
+
 
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
@@ -96,6 +99,21 @@ with st.form("cupcar_survey_form"):
     lead_lap = st.number_input("5. Number of Cars Finishing on Lead Lap", value=0, placeholder="Out of 37")
 
     submitted = st.form_submit_button("Submit")
+
+def send_confirmation_email(to_email, name):
+    sg = sendgrid.SendGridAPIClient(api_key=st.secrets["sendgrid"]["api_key"])
+    from_email = st.secrets["sendgrid"]["sender_email"]
+    subject = "✅ NASCAR Cup Car Challenge – Confirmation Received"
+    html_content = f"""
+    <p>Hi {name},</p>
+    <p>Thanks for participating in the Cup Car Challenge!</p>
+    <p>Here's a copy of your picks. Godspeed!</p>
+    <p>🏁</p>
+    """
+
+    message = Mail(from_email=from_email, to_emails=to_email, subject=subject, html_content=html_content)
+    sg.send(message)
+
 
 if submitted:
     errors = []
