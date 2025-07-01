@@ -110,6 +110,8 @@ if st.button("Submit"):
         for err in errors:
             st.warning(err)
     else:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                
+        eastern = pytz.timezone("US/Eastern")
+        timestamp = datetime.now(eastern).strftime("%Y-%m-%d %H:%M:%S %Z")
         sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
         st.success("✅ Godspeed!")
