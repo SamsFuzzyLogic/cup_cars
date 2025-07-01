@@ -29,7 +29,7 @@ def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
         <li><strong>Cars on Lead Lap:</strong> {lead_lap}</li>
     </ul>
 
-    <p>🏁 Good luck!</p>
+    <p>🏁 Good luck and may the best team win!</p>
     """
     message = Mail(from_email=from_email, to_emails=to_email, subject=subject, html_content=html_content)
     sg.send(message)
