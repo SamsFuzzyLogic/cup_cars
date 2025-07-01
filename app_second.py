@@ -132,7 +132,7 @@ if not st.session_state.get("submitted", False):
                 st.warning(err)
         else:
             eastern = timezone("US/Eastern")
-            timestamp = datetime.now(utc).astimezone(eastern).strftime("%Y-%m-%d %H:%M:%S %Z")
+            timestamp = datetime.now(utc).astimezone(eastern).strftime("%Y-%m-%d %H:%M:%S")
             sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
             send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
             st.session_state["submitted"] = True
