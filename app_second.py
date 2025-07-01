@@ -9,13 +9,24 @@ from gspread_formatting import (
 import sendgrid
 from sendgrid.helpers.mail import Mail
 
-
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
+def send_confirmation_email(to_email, name):
+    sg = sendgrid.SendGridAPIClient(api_key=st.secrets["sendgrid"]["api_key"])
+    from_email = st.secrets["sendgrid"]["sender_email"]
+    subject = "✅ NASCAR Cup Car Challenge – Confirmation Received"
+    html_content = f"""
+    <p>Hi {name},</p>
+    <p>Thanks for participating in the NASCAR Cup Car Challenge!</p>
+    <p>We received your picks and lead lap prediction. Good luck!</p>
+    <p>🏁</p>
+    """
+    message = Mail(from_email=from_email, to_emails=to_email, subject=subject, html_content=html_content)
+    sg.send(message)
+
 st.set_page_config(page_title="Chicago Road Race", layout="centered")
 
-# Centered logo image
 st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
 st.image("images/cupcar_logo.png", width=150)
 st.markdown("</div>", unsafe_allow_html=True)
@@ -44,7 +55,6 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 spreadsheet = client.open("Cup Survey")
 
-# Access or create worksheet
 target_title = "Chicago 2025"
 worksheet_list = spreadsheet.worksheets()
 sheet = next((ws for ws in worksheet_list if ws.title.strip().lower() == target_title.lower()), None)
@@ -52,7 +62,6 @@ sheet = next((ws for ws in worksheet_list if ws.title.strip().lower() == target_
 if not sheet:
     sheet = spreadsheet.add_worksheet(title=target_title, rows="100", cols="10")
 
-# Headers setup
 headers = ["Timestamp", "Email", "Entry Name", "Chevrolet Driver", "Ford Driver", "Toyota Driver", "Manufacturer", "Lead Lap"]
 values = sheet.get_all_values()
 if not values or values[0] != headers:
@@ -63,7 +72,6 @@ if not values or values[0] != headers:
     )
     format_cell_range(sheet, "A1:H1", header_format)
 
-# Form
 with st.form("cupcar_survey_form"):
     col1, col2 = st.columns(2)
     with col1:
@@ -100,21 +108,6 @@ with st.form("cupcar_survey_form"):
 
     submitted = st.form_submit_button("Submit")
 
-def send_confirmation_email(to_email, name):
-    sg = sendgrid.SendGridAPIClient(api_key=st.secrets["sendgrid"]["api_key"])
-    from_email = st.secrets["sendgrid"]["sender_email"]
-    subject = "✅ NASCAR Cup Car Challenge – Confirmation Received"
-    html_content = f"""
-    <p>Hi {name},</p>
-    <p>Thanks for participating in the Cup Car Challenge!</p>
-    <p>Here's a copy of your picks. Godspeed!</p>
-    <p>🏁</p>
-    """
-
-    message = Mail(from_email=from_email, to_emails=to_email, subject=subject, html_content=html_content)
-    sg.send(message)
-
-
 if submitted:
     errors = []
     if not entry_name.strip():
@@ -124,11 +117,11 @@ if submitted:
     if lead_lap <= 0 or lead_lap > 37:
         errors.append("🚫 Enter a number between 1 and 37 for cars finishing on the lead lap.")
 
-
     if errors:
         for err in errors:
             st.warning(err)
     else:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
-        st.success("✅ Godspeed!")
+        send_confirmation_email(email, entry_name)
+        st.success("✅ Godspeed! A confirmation has been sent to your email.")
