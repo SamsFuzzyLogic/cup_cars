@@ -94,7 +94,7 @@ if not st.session_state.get("submitted", False):
         q1 = st.radio("1. Best Chevrolet Driver", [
             "Ross Chastain", "Austin Dillon", "Kyle Larson", "Justin Haley", "Kyle Busch",
             "Chase Elliott", "Ty Dillon", "A.J. Allmendinger", "William Byron",
-            "Ricky Stenhouse", "Alex Bowman", "Michael McDowell", "Carson Hocevar", "Shane Van Gisbergen"
+            "Ricky Stenhouse", "Alex Bowman", "Michael McDowell", "Carson Hocevar", "Shane Van Gisbergen", "Daniel Suarez"
         ])
         st.markdown("###")
 
