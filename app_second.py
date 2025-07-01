@@ -18,7 +18,7 @@ def send_confirmation_email(to_email, name, q1, q2, q3, q4, lead_lap):
     subject = "✅ NASCAR Cup Car Challenge – Confirmation Received"
     html_content = f"""
     <p>Hi {name},</p>
-    <p>Thanks for participating in the NASCAR Cup Car Challenge!</p>
+    <p>Thanks for participating in the Cup Car Challenge!</p>
 
     <p><strong>Your picks:</strong></p>
     <ul>
