@@ -136,6 +136,6 @@ if not st.session_state.get("submitted", False):
             sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
             send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
             st.session_state["submitted"] = True
-            st.success("✅ Thank you! Your entry has been submitted and a confirmation email has been sent.")
+            st.success("✅ Thank you! Godspeed.")
 else:
     st.success("✅ Your entry has already been submitted. Thank you for participating!")
