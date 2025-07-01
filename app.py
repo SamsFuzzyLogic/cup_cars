@@ -3,7 +3,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import re
-import pytz
+from pytz import timezone, utc
 from gspread_formatting import (
     CellFormat, Color, TextFormat, format_cell_range
 )
@@ -129,8 +129,8 @@ if not st.session_state.get("submitted", False):
             for err in errors:
                 st.warning(err)
         else:
-            eastern = pytz.timezone("US/Eastern")
-            timestamp = datetime.now(eastern).strftime("%Y-%m-%d %H:%M:%S %Z")
+            eastern = timezone("US/Eastern")
+            timestamp = datetime.now(utc).astimezone(eastern).strftime("%Y-%m-%d %H:%M:%S %Z")
             sheet.append_row([timestamp, email, entry_name, q1, q2, q3, q4, int(lead_lap)])
             send_confirmation_email(email, entry_name, q1, q2, q3, q4, int(lead_lap))
             st.session_state["submitted"] = True
